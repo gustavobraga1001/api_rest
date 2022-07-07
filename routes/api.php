@@ -22,11 +22,12 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/teste', function(){
     echo "teste";
 });
+Route::apiResource('posts', \App\Http\Controllers\PostsController::class);
 
 
 
 Route::group(['middleware' => ['auth:sanctum']], function(){
-    Route::apiResource('posts', \App\Http\Controllers\PostsController::class);
+
     Route::apiResource('dates', \App\Http\Controllers\EventController::class);
     route::post('/logout', [AuthController::class, 'logout']);
 });
