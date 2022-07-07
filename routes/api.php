@@ -19,6 +19,9 @@ use app\Models\User;
 */
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::get('/teste', function(){
+    echo "teste";
+});
 
 
 
