@@ -13,6 +13,6 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         'stripe/*',
-        'https://api-braga.herokuapp.com/api/posts',
+        'api/posts',
     ];
 }
