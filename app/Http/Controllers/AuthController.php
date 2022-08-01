@@ -16,28 +16,31 @@ class AuthController extends Controller
             'password' => 'required|string|confirmed'
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password)
-        ]);
-
         $user = User::where('email', $request->email)->first();
 
-        if (!$user){
+        if ($user){
             return response([
                 'message' => 'Credenciais invalidas'
             ],401);
+        } else {
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password)
+            ]);
+
+
+            $token = $user->createToken('primeirotoken')->plainTextToken;
+
+            $response = [
+                'user' => $user,
+                'token' => $token
+            ];
+
+            return response($response, 201);
         }
 
-        $token = $user->createToken('primeirotoken')->plainTextToken;
 
-        $response = [
-            'user' => $user,
-            'token' => $token
-        ];
-
-        return response($response, 201);
     }
 
     public function login (Request $request)
