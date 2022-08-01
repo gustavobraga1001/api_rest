@@ -24,7 +24,7 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if (!$user == !Hash::check($request->email, $user->password)){
+        if (!$user){
             return response([
                 'message' => 'Credenciais invalidas'
             ],401);
