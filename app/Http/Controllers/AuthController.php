@@ -22,6 +22,8 @@ class AuthController extends Controller
             'password' => bcrypt($request->password)
         ]);
 
+        $user = User::where('email', $request->email)->first();
+
         if (!$user == !Hash::check($request->email, $user->password)){
             return response([
                 'message' => 'Credenciais invalidas'
