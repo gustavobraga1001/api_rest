@@ -22,6 +22,12 @@ class AuthController extends Controller
             'password' => bcrypt($request->password)
         ]);
 
+        if (!$user == !Hash::check($request->email, $user->password)){
+            return response([
+                'message' => 'Credenciais invalidas'
+            ],401);
+        }
+
         $token = $user->createToken('primeirotoken')->plainTextToken;
 
         $response = [
