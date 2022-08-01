@@ -22,6 +22,7 @@ class AuthController extends Controller
             return response([
                 'message' => 'Credenciais invalidas'
             ],401);
+            var_dump($user);exit;
         } else {
             $user = User::create([
                 'name' => $request->name,
