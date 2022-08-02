@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    /**
+     * Registrar um novo usuário
+     */
+
     public function register(Request $request)
     {
         $request->validate([
@@ -16,47 +20,40 @@ class AuthController extends Controller
             'password' => 'required|string|confirmed'
         ]);
 
-        $user = User::where('email', $request->email)->first();
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password)
+        ]);
 
-        if ($user){
-            return response([
-                'message' => 'Credenciais invalidas'
-            ],401);
-            var_dump($user);exit;
-        } else {
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => bcrypt($request->password)
-            ]);
+        $token = $user->createToken('primeirotoken')->plainTextToken;
 
+        $response = [
+            'user' => $user,
+            'token' => $token
+        ];
 
-            $token = $user->createToken('primeirotoken')->plainTextToken;
-
-            $response = [
-                'user' => $user,
-                'token' => $token
-            ];
-
-            return response($response, 201);
-        }
-
-
+        return response($response, 201);
     }
 
-    public function login (Request $request)
+    /**
+     * Login do usuário
+     */
+    public function login(Request $request)
     {
         $request->validate([
             'email' => 'required|string',
             'password' => 'required|string'
         ]);
 
+        // checka o e-mail do usuário
         $user = User::where('email', $request->email)->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)){
+        //valida usuario e checa o password
+        if (!$user || !Hash::check($request->password, $user->password)) {
             return response([
                 'message' => 'Credenciais invalidas'
-            ],401);
+            ], 401);
         }
 
         $token = $user->createToken('primeirotoken')->plainTextToken;
@@ -69,12 +66,15 @@ class AuthController extends Controller
         return response($response, 201);
     }
 
-    public function logout ()
+    /**
+     * Logout do usuário
+     */
+    public function logout()
     {
         auth()->user()->tokens()->delete();
 
         return [
-            'message' => 'logout efetuado com sucesso e exclusão dos tokens'
+            'message' => 'Logout efetuado com sucesso e exclusão dos tokens.'
         ];
     }
 }
