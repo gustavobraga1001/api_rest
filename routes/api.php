@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BarberController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\PictureController;
 use App\Http\Controllers\PostsController;
+use App\Models\Appointment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use app\Models\User;
@@ -19,15 +23,18 @@ use app\Models\User;
 */
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-Route::get('/teste', function(){
-    echo "teste";
-});
 
 Route::apiResource('/posts', \App\Http\Controllers\PostsController::class);
 
+route::post('/barbers', [BarberController::class, 'store']);
+route::get('/barbers', [BarberController::class, 'index']);
+route::get('/barbersAll/{id}', [BarberController::class, 'show']);
+
 
 Route::group(['middleware' => ['auth:sanctum']], function(){
-
+    Route::apiResource('/agendamentos', \App\Http\Controllers\AppointmentController::class);
     Route::apiResource('/dates', \App\Http\Controllers\EventController::class);
     route::post('/logout', [AuthController::class, 'logout']);
+    route::get('/appointments', [AppointmentController::class, 'one']);
+    route::delete('/appointments/delete', [AppointmentController::class, 'destroy']);
 });
