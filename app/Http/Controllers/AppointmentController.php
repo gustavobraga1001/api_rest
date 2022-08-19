@@ -36,7 +36,7 @@ class AppointmentController extends Controller
         $appointment->id_barber = $request->id_barber;
         $appointment->avatar_url = $request->avatar_url;
         $appointment->name = $request->name;
-        $appointment->service = $request->service;
+        $appointment->service = $service2;
         $appointment->selectedYear = $request->selectedYear;
         $appointment->selectedMonth = $request->selectedMonth;
         $appointment->selectedDay = $request->selectedDay;
