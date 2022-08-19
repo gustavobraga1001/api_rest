@@ -32,7 +32,8 @@ route::get('/barbersAll/{id}', [BarberController::class, 'show']);
 
 
 Route::group(['middleware' => ['auth:sanctum']], function(){
-    Route::apiResource('/agendamentos', \App\Http\Controllers\AppointmentController::class);
+    Route::post('/appo', [AppointmentController::class, 'store']);
+    //Route::apiResource('/agendamentos', \App\Http\Controllers\AppointmentController::class);
     Route::apiResource('/dates', \App\Http\Controllers\EventController::class);
     route::post('/logout', [AuthController::class, 'logout']);
     route::get('/appointments', [AppointmentController::class, 'one']);

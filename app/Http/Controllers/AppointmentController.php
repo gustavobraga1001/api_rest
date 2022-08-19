@@ -26,31 +26,33 @@ class AppointmentController extends Controller
      */
     public function store(Request $request)
     {
-
-        //Verifica os campos da requisição
-        $request->validate([
-            'dia' => 'required|string',
-            'mes' => 'required|string',
-            'ano' => 'required|string',
-            'hora' => 'required|string'
-        ]);
+        $service = $request->service;
+        $service2 = json_encode($service);
+        //var_dump($service2);exit;
 
         $appointment = new Appointment;
 
         //Defini os dados para serem inseridos
-        $appointment->dia = $request->dia;
-        $appointment->mes = $request->mes;
-        $appointment->ano = $request->ano;
-        $appointment->hora = $request->hora;
+        $appointment->id_barber = $request->id_barber;
+        $appointment->avatar_url = $request->avatar_url;
+        $appointment->name = $request->name;
+        $appointment->service = $request->service;
+        $appointment->selectedYear = $request->selectedYear;
+        $appointment->selectedMonth = $request->selectedMonth;
+        $appointment->selectedDay = $request->selectedDay;
+        $appointment->selectedHour = $request->selectedHour;
         $user = auth()->user();
         $appointment->user_id = $user->id;
         $appointment->user_name = $user->name;
 
         //Checa a data
-        $checkHora = Appointment::where('hora', $request->hora)->first();
-        $checkdia = Appointment::where('dia', $request->dia)->first();
-        $checkmes = Appointment::where('mes', $request->mes)->first();
-        $checkano = Appointment::where('ano', $request->ano)->first();
+        $checkHora = Appointment::where('selectedHour', $request->selectedHour)->first();
+        $checkdia = Appointment::where('selectedDay', $request->selectedDay)->first();
+        $checkmes = Appointment::where('selectedMonth', $request->selectedMonth)->first();
+        $checkano = Appointment::where('selectedYear', $request->selectedYear)->first();
+
+        //$request2 = $request->toArray();
+        //var_dump($user->name);exit;
 
         if ($checkHora && $checkdia && $checkmes && $checkano) {
             return $response = json_encode([
@@ -114,8 +116,10 @@ class AppointmentController extends Controller
 
         $appointmentOwner = Appointment::where('user_id', $id)->first();
 
+        return $appointmentOwner->service;exit;
+
         if ($appointmentOwner){
-            return $response = json_encode($appointmentOwner);
+            return $appointmentOwner;
             //var_dump($appointmentOwner);exit;
         } else {
             return $response = json_encode([

@@ -22,7 +22,6 @@ class BarberController extends Controller
                 "mensage" => "Barbeiro não encotrado!"
             ]);
         }
-
     }
 
     public function store(Request $request) {
@@ -36,12 +35,12 @@ class BarberController extends Controller
         $barber->services = $request->services;
         $barber->available = $request->available;
 
+        //var_dump($request->services);exit;
+
         $barber->save();
             return $response = json_encode([
                 "error" => false,
                 "mensage" => "Barbeiro cadastrado com successo"
             ]);
     }
-
-
 }
