@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Barber;
 use Illuminate\Http\Request;
+use App\Models\Available;
 
 class BarberController extends Controller
 {
@@ -14,8 +15,9 @@ class BarberController extends Controller
 
     public function show($id) {
         $barber = Barber::where('id', $id)->first();
+        $available = Available::where('barber_id',$id)->get();
         if ($barber) {
-            return $barber;
+            return [ $barber, $available];
         } else {
             return $response = json_encode([
                 "error" => true,
@@ -28,12 +30,13 @@ class BarberController extends Controller
 
         $barber = new Barber;
 
+        //var_dump($request->services);exit;
+
         //Defini os dados para serem inseridos
         $barber->avatar_url = $request->avatar_url;
         $barber->name = $request->name;
         $barber->stars = $request->stars;
         $barber->services = $request->services;
-        $barber->available = $request->available;
 
         //var_dump($request->services);exit;
 

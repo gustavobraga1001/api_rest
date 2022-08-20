@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('barbers', function (Blueprint $table) {
+        Schema::create('availables', function (Blueprint $table) {
             $table->id();
-            $table->string('avatar_url');
-            $table->string('name');
-            $table->double('stars');
-            $table->string('services');
+            $table->integer('barber_id');
+            $table->string('date');
+            $table->string('hours');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('barbers');
+        Schema::dropIfExists('availables');
     }
 };

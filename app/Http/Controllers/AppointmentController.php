@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
+use App\Models\Available;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Barber;
 
 class AppointmentController extends Controller
 {
@@ -26,9 +28,24 @@ class AppointmentController extends Controller
      */
     public function store(Request $request)
     {
-        $service = $request->service;
-        $service2 = json_encode($service);
-        //var_dump($service2);exit;
+        $day = $request->selectedDay;
+        $month = $request->selectedMonth;
+        $year = $request->selectedYear;
+        $date = $year .'-' .$month. '-'. $day;
+        $barberDate = Available::where('date', $date)->first();
+
+        $availables = $barberDate->hours;
+
+        $key = array_search($request->selectedHour, $availables);
+        //var_dump($key);exit;
+        if($key!==false){
+        unset($availables[$key]);
+        }
+        //var_dump($barberDate->id);exit;
+        $this->update($availables, $barberDate->id);
+        $ok = json_decode($availables);
+        //var_dump($ok);exit;
+
 
         $appointment = new Appointment;
 
@@ -36,7 +53,7 @@ class AppointmentController extends Controller
         $appointment->id_barber = $request->id_barber;
         $appointment->avatar_url = $request->avatar_url;
         $appointment->name = $request->name;
-        $appointment->service = $service2;
+        $appointment->service = $request->service;
         $appointment->selectedYear = $request->selectedYear;
         $appointment->selectedMonth = $request->selectedMonth;
         $appointment->selectedDay = $request->selectedDay;
@@ -46,7 +63,7 @@ class AppointmentController extends Controller
         $appointment->user_name = $user->name;
 
         //Checa a data
-        $checkHora = Appointment::where('selectedHour', $request->selectedHour)->first();
+        /*$checkHora = Appointment::where('selectedHour', $request->selectedHour)->first();
         $checkdia = Appointment::where('selectedDay', $request->selectedDay)->first();
         $checkmes = Appointment::where('selectedMonth', $request->selectedMonth)->first();
         $checkano = Appointment::where('selectedYear', $request->selectedYear)->first();
@@ -59,9 +76,12 @@ class AppointmentController extends Controller
                 "error" => true,
                 "mensage" => "Essa data já esta em uso"
             ]);
-        }
+        }*/
 
         $id = $user->id;
+        //var_dump($availables);exit;
+
+
 
         $check = Appointment::where('user_id', $id)->first();
 
@@ -70,14 +90,42 @@ class AppointmentController extends Controller
                 "error" => true,
                 "mensage" => "Você só pode ter um agendamento por vez"
             ]);
+
         } else {
-            $appointment->save();
-            return $response = json_encode([
+
+            //$appointment->save();
+
+
+            /*return $response = json_encode([
                 "error" => false,
                 "mensage" => "Agendamento publicado com successo"
+            ]);*/
+        }
+
+
+    }
+
+    public function update($availables, $id)
+        {
+
+           $ok =  serialize($availables);
+            //var_dump($ok);exit;
+            $post = Available::findOrFail($id);
+            $novo = $availables;
+
+
+            $teste = $post->update($novo);
+            if ($teste){
+                return "ok";exit;
+            } else {
+                return "erro";
+            }
+
+            return $response = json_encode([
+                "error" => false,
+                "mensage" => "Post atualizado com sucesso!"
             ]);
         }
-}
 
     /**
      * Remove the specified resource from storage.
@@ -116,7 +164,7 @@ class AppointmentController extends Controller
 
         $appointmentOwner = Appointment::where('user_id', $id)->first();
 
-        return $appointmentOwner->service;exit;
+        //return $appointmentOwner->service;exit;
 
         if ($appointmentOwner){
             return $appointmentOwner;
@@ -129,4 +177,3 @@ class AppointmentController extends Controller
         }
     }
 }
-

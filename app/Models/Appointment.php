@@ -17,10 +17,15 @@ class Appointment extends Model
         'selectedYear',
         'selectedMonth',
         'selectedDay',
-        'selectedHour'
+        'selectedHour',
+        'hours'
     ];
 
-    public function User() {
+    protected $casts = [
+        'service' => 'array',
+        'hours' => 'array'
+    ];
+    /*public function User() {
         return $this->belongsTo(User::class);
-    }
+    }*/
 }
