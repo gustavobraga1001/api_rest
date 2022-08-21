@@ -26,9 +26,8 @@ class AppointmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        var_dump($request->id_barber);exit;
+    public function store (Request $request){
+        var_dump($request->name);exit;
         $day = $request->selectedDay;
         $month = $request->selectedMonth;
         $year = $request->selectedYear;
@@ -39,8 +38,6 @@ class AppointmentController extends Controller
         $availables = $barberDate->hours;
 
         $key = array_search($request->selectedHour, $availables);
-        //var_dump($key);exit;
-        //var_dump($key);exit;
         if($key!==false){
         unset($availables[$key]);
         }
