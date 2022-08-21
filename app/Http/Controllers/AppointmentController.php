@@ -28,7 +28,7 @@ class AppointmentController extends Controller
      */
     public function store(Request $request)
     {
-        var_dump($request);exit;
+        var_dump($request->id_barber);exit;
         $day = $request->selectedDay;
         $month = $request->selectedMonth;
         $year = $request->selectedYear;
