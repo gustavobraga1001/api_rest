@@ -28,12 +28,12 @@ class AppointmentController extends Controller
      */
     public function store(Request $request)
     {
-
+        var_dump($request->selectedDay);exit;
         $day = $request->selectedDay;
         $month = $request->selectedMonth;
         $year = $request->selectedYear;
         $date = $year .'-' .$month. '-'. $day;
-        var_dump($date);exit;
+
         $barberDate = Available::where('date', $date)->first();
 
         $availables = $barberDate->hours;
