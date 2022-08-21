@@ -38,13 +38,12 @@ class AppointmentController extends Controller
 
         $key = array_search($request->selectedHour, $availables);
         //var_dump($key);exit;
+        //var_dump($key);exit;
         if($key!==false){
         unset($availables[$key]);
         }
-        //var_dump($barberDate->id);exit;
-        $this->update($availables, $barberDate->id);
-        $ok = json_decode($availables);
-        //var_dump($ok);exit;
+
+
 
 
         $appointment = new Appointment;
@@ -79,11 +78,10 @@ class AppointmentController extends Controller
         }*/
 
         $id = $user->id;
-        //var_dump($availables);exit;
-
-
 
         $check = Appointment::where('user_id', $id)->first();
+
+
 
         if ($check){
             return $response = json_encode([
@@ -93,13 +91,18 @@ class AppointmentController extends Controller
 
         } else {
 
-            //$appointment->save();
+            $appointment->save();
+            $this->update($availables, $barberDate->id);
+            $deleteHours = Available::where('date', $date)->first();
+            if ($deleteHours->hours == null) {
+                $this->deleteHour($barberDate->id);
+            }
+                return $response = json_encode([
+                    "error" => false,
+                    "mensage" => "Agendamento publicado com successo"
+                ]);
 
 
-            /*return $response = json_encode([
-                "error" => false,
-                "mensage" => "Agendamento publicado com successo"
-            ]);*/
         }
 
 
@@ -108,23 +111,14 @@ class AppointmentController extends Controller
     public function update($availables, $id)
         {
 
-           $ok =  serialize($availables);
-            //var_dump($ok);exit;
             $post = Available::findOrFail($id);
-            $novo = $availables;
 
+            $post->update(["hours" => $availables]);
+        }
 
-            $teste = $post->update($novo);
-            if ($teste){
-                return "ok";exit;
-            } else {
-                return "erro";
-            }
-
-            return $response = json_encode([
-                "error" => false,
-                "mensage" => "Post atualizado com sucesso!"
-            ]);
+        public  function deleteHour($id){
+            $post = Available::findOrFail($id);
+            $post->delete();
         }
 
     /**
