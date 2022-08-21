@@ -32,7 +32,6 @@ class AppointmentController extends Controller
         $month = $request->selectedMonth;
         $year = $request->selectedYear;
         $date = $year .'-' .$month. '-'. $day;
-        var_dump($date);exit;
 
         $barberDate = Available::where('date', $date)->first();
 
