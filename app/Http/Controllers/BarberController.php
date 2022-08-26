@@ -17,7 +17,7 @@ class BarberController extends Controller
         $barber = Barber::where('id', $id)->first();
         $available = Available::where('barber_id',$id)->get();
         if ($barber) {
-            return [ $barber, $available];
+            return $barber;
         } else {
             return $response = json_encode([
                 "error" => true,
@@ -30,9 +30,6 @@ class BarberController extends Controller
 
         $barber = new Barber;
 
-        //var_dump($request->services);exit;
-
-        //Defini os dados para serem inseridos
         $barber->avatar_url = $request->avatar_url;
         $barber->name = $request->name;
         $barber->stars = $request->stars;
