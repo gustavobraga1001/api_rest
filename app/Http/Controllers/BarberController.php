@@ -10,7 +10,7 @@ class BarberController extends Controller
 {
     public function index()
     {
-        return Barber::all(['id','avatar_url','name','stars']);
+        return Barber::all(["barber"=> 'id','avatar_url','name','stars']);
     }
 
     public function show($id) {
