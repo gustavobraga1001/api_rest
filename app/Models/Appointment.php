@@ -18,7 +18,6 @@ class Appointment extends Model
         'selectedMonth',
         'selectedDay',
         'selectedHour',
-        'hours'
     ];
 
     protected $casts = [

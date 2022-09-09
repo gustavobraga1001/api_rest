@@ -33,16 +33,22 @@ class AppointmentController extends Controller
         $year = $request->selectedYear;
         $date = $year .'-' .$month. '-'. $day;
 
+       
+
         $barberDate = Available::where('date', $date)->first();
 
         $availables = $barberDate->hours;
 
         $key = array_search($request->selectedHour, $availables);
+
+        
         if($key!==false){
-        unset($availables[$key]);
+            unset($availables[$key]);
         }
 
+        
 
+        //var_dump($availables);exit;
 
 
         $appointment = new Appointment;
@@ -81,7 +87,6 @@ class AppointmentController extends Controller
         $check = Appointment::where('user_id', $id)->first();
 
 
-
         if ($check){
             return $response = json_encode([
                 "error" => true,
@@ -111,7 +116,7 @@ class AppointmentController extends Controller
         {
 
             $post = Available::findOrFail($id);
-
+            sort($availables);
             $post->update(["hours" => $availables]);
         }
 
