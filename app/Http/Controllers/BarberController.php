@@ -16,12 +16,7 @@ class BarberController extends Controller
     public function show($id) {
         $barber = Barber::where('id', $id)->first();
         $available = Available::where('barber_id',$id)->get();
-<<<<<<< HEAD
-         
-=======
 
-        
->>>>>>> be158fc2a3827b9f05ba70aa1fe352b7389ec015
         if ($barber) {
             return ["barber"=>$barber, "available"=>$available];
         } else {
@@ -40,8 +35,6 @@ class BarberController extends Controller
         $barber->name = $request->name;
         $barber->stars = $request->stars;
         $barber->services = $request->services;
-
-        //var_dump($request->services);exit;
 
         $barber->save();
             return $response = json_encode([
