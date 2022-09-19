@@ -28,6 +28,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::apiResource('/posts', \App\Http\Controllers\PostsController::class);
 
 route::post('/barbers', [BarberController::class, 'store']);
+route::delete('/barbers/{id}', [BarberController::class, 'destroy']);
 route::get('/barbers', [BarberController::class, 'index']);
 route::get('/barbersAll/{id}', [BarberController::class, 'show']);
 route::post('/available', [AvailableController::class, 'store']);

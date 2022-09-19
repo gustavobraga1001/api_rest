@@ -42,4 +42,14 @@ class BarberController extends Controller
                 "mensage" => "Barbeiro cadastrado com successo"
             ]);
     }
+
+    public function destroy($id)
+    {
+        $post = Barber::findOrFail($id);
+        $post->delete();
+        return $response = json_encode([
+            "error" => false,
+            "mensage" => "Barbeiro deletado com sucesso!"
+        ]);
+    }
 }
