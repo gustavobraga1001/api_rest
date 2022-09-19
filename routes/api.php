@@ -32,6 +32,7 @@ route::delete('/barbers/{id}', [BarberController::class, 'destroy']);
 route::get('/barbers', [BarberController::class, 'index']);
 route::get('/barbersAll/{id}', [BarberController::class, 'show']);
 route::post('/available', [AvailableController::class, 'store']);
+route::delete('/available/{id}', [AvailableController::class, 'destroy']);
 
 
 Route::group(['middleware' => ['auth:sanctum']], function(){
