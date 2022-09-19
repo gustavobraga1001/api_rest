@@ -22,7 +22,7 @@ class BarberController extends Controller
         } else {
             return $response = json_encode([
                 "error" => true,
-                "mensage" => "Barbeiro não encotrado!"
+                "mensage" => "Barbeiro não encotrado !"
             ]);
         }
     }
