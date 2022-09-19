@@ -17,7 +17,7 @@ class BarberController extends Controller
         $barber = Barber::where('id', $id)->first();
         $available = Available::where('barber_id',$id)->get();
 
-        return $available;exit;
+        
         if ($barber) {
             return ["barber"=>$barber, "available"=>$available];
         } else {
