@@ -40,4 +40,14 @@ class AvailableController extends Controller
                 "mensage" => "Post atualizado com sucesso!"
             ]);
         }
+
+    public function destroy($id)
+    {
+        $post = Available::findOrFail($id);
+        $post->delete();
+        return $response = json_encode([
+            "error" => false,
+            "mensage" => "Data deletada com sucesso!"
+        ]);
+    }
 }
