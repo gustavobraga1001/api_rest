@@ -40,8 +40,6 @@ Route::post('/appotest', [AppoTestController::class, 'store']);
 
 // auth
 
-
-
 Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/appo', [AppointmentController::class, 'store']);
     Route::put('/appo/{id}', [AppointmentController::class, 'update']);
