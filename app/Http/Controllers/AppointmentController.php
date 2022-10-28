@@ -35,9 +35,9 @@ class AppointmentController extends Controller
  
 
         $barberDate = Available::where('date', $date)->first();
-
+        var_dump($barberDate);exit;
         $availables = $barberDate->hours;
-        var_dump($availables);exit;
+
 
         $key = array_search($request->selectedHour, $availables);
 
