@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\AppoTestController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AvailableController;
 use App\Http\Controllers\BarberController;
@@ -33,6 +34,7 @@ route::get('/barbers', [BarberController::class, 'index']);
 route::get('/barbersAll/{id}', [BarberController::class, 'show']);
 route::post('/available', [AvailableController::class, 'store']);
 route::delete('/available/{id}', [AvailableController::class, 'destroy']);
+Route::post('/appotest', [AppoTestController::class, 'store']);
 
 
 
