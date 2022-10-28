@@ -33,6 +33,8 @@ class AppointmentController extends Controller
         $year = $request->selectedYear;
         $date = $year .'-' .$month. '-'. $day;
 
+        var_dump($date);exit;
+
        
 
         $barberDate = Available::where('date', $date)->first();
