@@ -32,10 +32,7 @@ class AppointmentController extends Controller
         $month = $request->selectedMonth;
         $year = $request->selectedYear;
         $date = $year .'-' .$month. '-'. $day;
-
-        var_dump($date);exit;
-
-       
+ 
 
         $barberDate = Available::where('date', $date)->first();
 
@@ -47,10 +44,6 @@ class AppointmentController extends Controller
         if($key!==false){
             unset($availables[$key]);
         }
-
-        
-
-        //var_dump($availables);exit;
 
 
         $appointment = new Appointment;
@@ -96,7 +89,7 @@ class AppointmentController extends Controller
             ]);
 
         } else {
-
+            var_dump($appointment);exit;
             $appointment->save();
             $this->update($availables, $barberDate->id);
             $deleteHours = Available::where('date', $date)->first();
