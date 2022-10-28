@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\AppoTest;
+use App\Models\Test;
 use Illuminate\Http\Request;
 
 class AppoTestController extends Controller
 {
     public function store(Request $request)
     {
-        $appo = new AppoTest;
+        $appo = new Test;
 
         $appo->id_barber = $request->id_barber;
         $appo->avatar_url = $request->avatar_url;
