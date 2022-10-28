@@ -20,7 +20,7 @@ class AppoTestController extends Controller
         $appo->selectedDay = $request->selectedDay;
         $appo->selectedHour = $request->selectedHour;
 
-        if ($appo->save()){
+        if ($appo){
             return $response = json_encode([
                 "error" => false,
                 "mensage" => "Appo cadastrado com sucesso"
