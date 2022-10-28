@@ -45,7 +45,7 @@ class AppointmentController extends Controller
             unset($availables[$key]);
         }
 
-
+        var_dump($availables);exit;
         $appointment = new Appointment;
 
         //Defini os dados para serem inseridos
@@ -89,7 +89,6 @@ class AppointmentController extends Controller
             ]);
 
         } else {
-            var_dump($appointment);exit;
             $appointment->save();
             $this->update($availables, $barberDate->id);
             $deleteHours = Available::where('date', $date)->first();
