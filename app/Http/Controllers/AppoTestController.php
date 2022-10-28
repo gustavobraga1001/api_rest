@@ -9,7 +9,7 @@ class AppoTestController extends Controller
 {
     public function store(Request $request)
     {
-        var_dump($request);exit;
+        var_dump($request->id_barber);exit;
         $appo = new AppoTest;
 
         $appo->id_barber = $request->id_barber;
