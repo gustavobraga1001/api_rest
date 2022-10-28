@@ -37,6 +37,7 @@ class AppointmentController extends Controller
         $barberDate = Available::where('date', $date)->first();
 
         $availables = $barberDate->hours;
+        var_dump($availables);exit;
 
         $key = array_search($request->selectedHour, $availables);
 
@@ -45,7 +46,7 @@ class AppointmentController extends Controller
             unset($availables[$key]);
         }
 
-        var_dump($availables);exit;
+
         $appointment = new Appointment;
 
         //Defini os dados para serem inseridos
