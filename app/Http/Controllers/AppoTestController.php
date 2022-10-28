@@ -9,7 +9,6 @@ class AppoTestController extends Controller
 {
     public function store(Request $request)
     {
-        var_dump($request->id_barber);exit;
         $appo = new AppoTest;
 
         $appo->id_barber = $request->id_barber;
@@ -20,6 +19,8 @@ class AppoTestController extends Controller
         $appo->selectedMonth = $request->selectedMonth;
         $appo->selectedDay = $request->selectedDay;
         $appo->selectedHour = $request->selectedHour;
+
+        var_dump($appo);exit;
 
         $appo->save();
             return $response = json_encode([
