@@ -58,8 +58,8 @@ class AppointmentController extends Controller
         $appointment->selectedDay = $request->selectedDay;
         $appointment->selectedHour = $request->selectedHour;
         $user = auth()->user();
-        $appointment->user_id = $request->id_user;
-        $appointment->user_name = $request->nameUser;
+        $appointment->user_id = $user->id;
+        $appointment->user_name = $user->name;
 
         //Checa a data
         /*$checkHora = Appointment::where('selectedHour', $request->selectedHour)->first();
