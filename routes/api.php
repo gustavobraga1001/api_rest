@@ -23,6 +23,7 @@ use app\Models\User;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
@@ -36,12 +37,14 @@ route::post('/available', [AvailableController::class, 'store']);
 route::delete('/available/{id}', [AvailableController::class, 'destroy']);
 Route::post('/appotest', [AppoTestController::class, 'store']);
 
+Route::post('/appo', [AppointmentController::class, 'store']);
+
 
 
 // auth
 
-Route::group(['middleware' => ['auth:sanctum']], function(){
-    Route::post('/appo', [AppointmentController::class, 'store']);
+Route::group(['middleware' => ['auth:sanctum']], function () {
+
     Route::put('/appo/{id}', [AppointmentController::class, 'update']);
     //Route::apiResource('/agendamentos', \App\Http\Controllers\AppointmentController::class);
     Route::apiResource('/dates', \App\Http\Controllers\EventController::class);
