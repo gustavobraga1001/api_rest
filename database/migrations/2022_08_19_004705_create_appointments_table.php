@@ -18,7 +18,9 @@ return new class extends Migration
             $table->integer('id_barber');
             $table->string('avatar_url');
             $table->string('name');
-            $table->string('service');
+            $table->integer('id_service');
+            $table->string('name_service');
+            $table->integer('price_service');
             $table->integer('selectedYear');
             $table->integer('selectedMonth');
             $table->integer('selectedDay');

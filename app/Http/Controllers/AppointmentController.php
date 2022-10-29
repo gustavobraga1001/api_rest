@@ -45,6 +45,7 @@ class AppointmentController extends Controller
             unset($availables[$key]);
         }
 
+        //var_dump($request->service);exit;
 
         $appointment = new Appointment;
 
@@ -52,7 +53,9 @@ class AppointmentController extends Controller
         $appointment->id_barber = $request->id_barber;
         $appointment->avatar_url = $request->avatar_url;
         $appointment->name = $request->name;
-        $appointment->service = $request->service;
+        $appointment->id_service = $request->service['id'];
+        $appointment->name_service = $request->service['name'];
+        $appointment->price_service = $request->service['price'];
         $appointment->selectedYear = $request->selectedYear;
         $appointment->selectedMonth = $request->selectedMonth;
         $appointment->selectedDay = $request->selectedDay;
