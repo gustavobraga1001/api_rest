@@ -128,26 +128,35 @@ class AppointmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy()
+    public function destroy($id)
     {
-        $user = auth()->user();
+        // $user = auth()->user();
 
-        $id = $user->id;
+        // $id = $user->id;
 
-        $appointment = Appointment::where('user_id', $id)->first();
+        // $appointment = Appointment::where('user_id', $id)->first();
 
-        if ($appointment){
-            $appointment->delete();
-            return $response = json_encode([
-                "error" => false,
-                "mensage" => "Agendamento deletado com sucesso!"
-            ]);
-        } else {
-            return $response = json_encode([
-                "error" => true,
-                "mensage" => "Não há agendamentos cadastrados"
-            ]);
-        }
+        // if ($appointment){
+        //     $appointment->delete();
+        //     return $response = json_encode([
+        //         "error" => false,
+        //         "mensage" => "Agendamento deletado com sucesso!"
+        //     ]);
+        // } else {
+        //     return $response = json_encode([
+        //         "error" => true,
+        //         "mensage" => "Não há agendamentos cadastrados"
+        //     ]);
+        //}
+
+        $appointment = Appointment::findOrFail($id);
+        $appointment->delete();
+        return $response = json_encode([
+            "error" => false,
+            "mensage" => "Agendamento deletado com sucesso!"
+        ]);
+
+
     }
 
     public function one () {

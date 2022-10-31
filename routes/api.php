@@ -50,6 +50,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('/dates', \App\Http\Controllers\EventController::class);
     route::post('/logout', [AuthController::class, 'logout']);
     route::get('/appointments', [AppointmentController::class, 'one']);
-    route::delete('/appointments/delete', [AppointmentController::class, 'destroy']);
+    route::delete('/appointments/delete/{id}', [AppointmentController::class, 'destroy']);
     route::get('/available', [AvailableController::class, 'index']);
 });
