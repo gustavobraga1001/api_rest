@@ -171,7 +171,7 @@ class AppointmentController extends Controller
         //return $appointmentOwner->service;exit;
 
         if ($appointmentOwner){
-            return $appointmentOwner;
+            return array($appointmentOwner);
             //var_dump($appointmentOwner);exit;
         } else {
             return $response = json_encode([
