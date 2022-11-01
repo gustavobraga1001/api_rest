@@ -20,6 +20,6 @@ class VerifyCsrfToken extends Middleware
         '/api/appo',
         'api/available',
         'api/barbers',
-   'api/appointments/delete'
+   '/api/appointments/delete'
     ];
 }
