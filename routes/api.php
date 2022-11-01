@@ -37,6 +37,7 @@ route::post('/available', [AvailableController::class, 'store']);
 route::delete('/available/{id}', [AvailableController::class, 'destroy']);
 Route::post('/appotest', [AppoTestController::class, 'store']);
 
+route::delete('/appointments/delete/{id}', [AppointmentController::class, 'destroy']);
 
 
 
@@ -50,6 +51,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('/dates', \App\Http\Controllers\EventController::class);
     route::post('/logout', [AuthController::class, 'logout']);
     route::get('/appointments', [AppointmentController::class, 'one']);
-    route::delete('/appointments/delete/{id}', [AppointmentController::class, 'destroy']);
     route::get('/available', [AvailableController::class, 'index']);
 });
