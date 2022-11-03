@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AppoTestController;
 use App\Http\Controllers\AuthController;
@@ -38,6 +39,11 @@ route::delete('/available/{id}', [AvailableController::class, 'destroy']);
 Route::post('/appotest', [AppoTestController::class, 'store']);
 
 route::delete('/appointments/delete/{id}', [AppointmentController::class, 'destroy']);
+
+
+Route::post('/admin', [AdminController::class, 'store']);
+Route::delete('/admin', [AdminController::class, 'delete']);
+
 
 
 
