@@ -12,7 +12,7 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        'stripe/*',
+        '/*',
         '/api/posts',
         '/api/login',
         '/api/register',
@@ -20,6 +20,6 @@ class VerifyCsrfToken extends Middleware
         '/api/appo',
         'api/available',
         'api/barbers',
-   'api/appointments/delete',
+   '/api/appointments/delete'
     ];
 }
