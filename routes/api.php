@@ -6,15 +6,8 @@ use App\Http\Controllers\AppoTestController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AvailableController;
 use App\Http\Controllers\BarberController;
-use App\Http\Controllers\EventController;
-use App\Http\Controllers\PictureController;
-use App\Http\Controllers\PostsController;
 use App\Http\Controllers\ServiceController;
-use App\Models\Appointment;
-use App\Models\Service;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use app\Models\User;
 
 /*
 |--------------------------------------------------------------------------

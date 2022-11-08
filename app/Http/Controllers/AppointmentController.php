@@ -45,8 +45,6 @@ class AppointmentController extends Controller
             unset($availables[$key]);
         }
 
-        //var_dump($request->service);exit;
-
         $appointment = new Appointment;
 
         //Defini os dados para serem inseridos
@@ -64,21 +62,6 @@ class AppointmentController extends Controller
         $appointment->user_id = $user->id;
         $appointment->user_name = $user->name;
 
-        //Checa a data
-        /*$checkHora = Appointment::where('selectedHour', $request->selectedHour)->first();
-        $checkdia = Appointment::where('selectedDay', $request->selectedDay)->first();
-        $checkmes = Appointment::where('selectedMonth', $request->selectedMonth)->first();
-        $checkano = Appointment::where('selectedYear', $request->selectedYear)->first();
-
-        //$request2 = $request->toArray();
-        //var_dump($user->name);exit;
-
-        if ($checkHora && $checkdia && $checkmes && $checkano) {
-            return $response = json_encode([
-                "error" => true,
-                "mensage" => "Essa data já esta em uso"
-            ]);
-        }*/
 
         $id = $user->id;
 
@@ -102,11 +85,7 @@ class AppointmentController extends Controller
                     "error" => false,
                     "mensage" => "Agendamento publicado com successo"
                 ]);
-
-
         }
-
-
     }
 
     public function update($availables, $id)
@@ -130,33 +109,12 @@ class AppointmentController extends Controller
      */
     public function destroy($id)
     {
-        // $user = auth()->user();
-
-        // $id = $user->id;
-
-        // $appointment = Appointment::where('user_id', $id)->first();
-
-        // if ($appointment){
-        //     $appointment->delete();
-        //     return $response = json_encode([
-        //         "error" => false,
-        //         "mensage" => "Agendamento deletado com sucesso!"
-        //     ]);
-        // } else {
-        //     return $response = json_encode([
-        //         "error" => true,
-        //         "mensage" => "Não há agendamentos cadastrados"
-        //     ]);
-        //}
-
         $appointment = Appointment::findOrFail($id);
         $appointment->delete();
         return $response = json_encode([
             "error" => false,
             "mensage" => "Agendamento deletado com sucesso!"
         ]);
-
-
     }
 
     public function one () {
@@ -164,15 +122,11 @@ class AppointmentController extends Controller
         $user = auth()->user();
 
         $id = $user->id;
-        //var_dump($id);exit;
 
         $appointmentOwner = Appointment::where('user_id', $id)->first();
 
-        //return $appointmentOwner->service;exit;
-
         if ($appointmentOwner){
             return array($appointmentOwner);
-            //var_dump($appointmentOwner);exit;
         } else {
             return $response = json_encode([
                 "error" => true,
