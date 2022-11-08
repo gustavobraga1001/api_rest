@@ -9,7 +9,9 @@ use App\Http\Controllers\BarberController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\PictureController;
 use App\Http\Controllers\PostsController;
+use App\Http\Controllers\ServiceController;
 use App\Models\Appointment;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use app\Models\User;
@@ -38,6 +40,8 @@ route::post('/available', [AvailableController::class, 'store']);
 route::delete('/available/{id}', [AvailableController::class, 'destroy']);
 Route::post('/appotest', [AppoTestController::class, 'store']);
 
+
+Route::post('/service', [ServiceController::class, 'store']);
 route::delete('/appointments/delete/{id}', [AppointmentController::class, 'destroy']);
 
 
