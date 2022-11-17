@@ -34,7 +34,7 @@ class AppointmentController extends Controller
         $date = $year .'-' .$month. '-'. $day;
  
 
-        $barberDate = Available::where('date', $date)->first();
+        $barberDate = Available::where('date', $date)->where('barber_id', $request->id_barber)->first();;
         $availables = $barberDate->hours;
 
 
@@ -44,6 +44,7 @@ class AppointmentController extends Controller
         if($key!==false){
             unset($availables[$key]);
         }
+
 
         $appointment = new Appointment;
 
@@ -76,8 +77,9 @@ class AppointmentController extends Controller
 
         } else {
             $appointment->save();
-            $this->update($availables, $barberDate->id);
-            $deleteHours = Available::where('date', $date)->first();
+            $this->update($date, $availables, $request->id_barber);
+
+            $deleteHours = Available::where('date', $date)->where('barber_id', $request->id_barber)->first();
             if ($deleteHours->hours == null) {
                 $this->deleteHour($barberDate->id);
             }
@@ -88,18 +90,25 @@ class AppointmentController extends Controller
         }
     }
 
-    public function update($availables, $id)
+    public function update($date, $availables, $id)
         {
-
-            $post = Available::findOrFail($id);
+            $post = Available::where('date', $date)->where('barber_id', $id)->first();
+            //var_dump($post);exit;
             sort($availables);
             $post->update(["hours" => $availables]);
         }
 
-        public  function deleteHour($id){
-            $post = Available::findOrFail($id);
-            $post->delete();
-        }
+    public function deleteHour($id)
+    {
+        $post = Available::findOrFail($id);
+        $post->delete();
+    }
+
+    public function updateHour($availables, $id)
+    {
+        $post = Available::where('barber_id',$id);
+        $post->update(["hours" => $availables]);
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -110,11 +119,47 @@ class AppointmentController extends Controller
     public function destroy($id)
     {
         $appointment = Appointment::findOrFail($id);
-        $appointment->delete();
-        return $response = json_encode([
-            "error" => false,
-            "mensage" => "Agendamento deletado com sucesso!"
-        ]);
+        $day = $appointment->selectedDay;
+        $month = $appointment->selectedMonth;
+        $year = $appointment->selectedYear;
+        $hour = $appointment->selectedHour;
+
+        $date = $year .'-' .$month. '-'. $day;
+        //$teste = Available::where('barber_id', $addHours->barber_id)->get();
+
+        $addHours = Available::where('date', $date)->where('barber_id', $appointment->id_barber)->first();
+        $hours = [];
+        if ($addHours) {
+            $hours = $addHours->hours;
+            array_push($hours, $hour);
+            
+            natsort($hours);
+            
+            sort($hours);
+            $this->updateHour($hours, $appointment->id_barber);
+            
+            //var_dump('ok');exit;
+            $appointment->delete();
+            return $response = json_encode([
+                "error" => false,
+                "mensage" => "Agendamento deletado com sucesso!"
+            ]);
+        } else {
+            array_push($hours, $hour);
+            $available = new Available;
+            $available->barber_id = $appointment->id_barber;
+            $available->date = $date;
+            $available->hours = $hours;
+
+            $available->save();
+
+            $appointment->delete();
+            return $response = json_encode([
+                "error" => false,
+                "mensage" => "Agendamento deletado com sucesso!"
+            ]);
+        }
+        
     }
 
     public function one () {
